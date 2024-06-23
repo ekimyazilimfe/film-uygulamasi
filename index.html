@@ -27,8 +27,9 @@
       <p><input required type="text" name="name" placeholder="Adı"></p>
       <p><input required type="text" name="summary" placeholder="Konu"></p>
       <p><input required type="number" name="score" placeholder="Puan"></p>
-      <p><input required type="text" name="poster" placeholder="Poster" value="https://picsum.photos/id/237/150/200"></p>
-      <p><button>Ekle</button></p>
+      <p><input required type="text" name="poster" placeholder="Poster"></p>
+      <p><button>Ekle</button> <button type="button" onclick="addMovieForm.reset();modal.close();">Vazgeç</button></p>
+      <input type="hidden" name="id" value="">
     </form>
   </dialog>
 </body>

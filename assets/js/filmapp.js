@@ -17,15 +17,27 @@ function generateId() {
   return id;
 }
 
-addMovieBtn.addEventListener('click', () => modal.showModal());
+addMovieBtn.addEventListener('click', () => { 
+  document.querySelector('input[name="id"]').value = "";
+  modal.showModal();
+});
 
 function handleAddMovieForm() {
   let formData = new FormData(addMovieForm);
   let formObj = Object.fromEntries(formData);
   addMovieForm.reset();
 
-  formObj.id = generateId();
-  movies.push(formObj);
+  if(formObj.id !== '') { // guncelle
+    let movie = movies.find(x => x.id === Number(formObj.id));
+    movie.name = formObj.name;
+    movie.poster = formObj.poster;
+    movie.summary = formObj.summary;
+    movie.score = formObj.score;
+  } else { // yeni ekle
+    formObj.id = generateId();
+    movies.push(formObj);
+  }
+
   save();
   renderMovies();
 }
@@ -69,10 +81,25 @@ function handleDeleteBtn(e) {
   renderMovies();
 }
 
+function handleEditBtn(e) {
+  e.preventDefault();
+  let movieId = Number(this.dataset.movieid);
+  let movie = movies.find(x => x.id === movieId);
+  document.querySelector('input[name="id"]').value = movie.id;
+  document.querySelector('input[name="name"]').value = movie.name;
+  document.querySelector('input[name="summary"]').value = movie.summary;
+  document.querySelector('input[name="poster"]').value = movie.poster;
+  document.querySelector('input[name="score"]').value = movie.score;
+  modal.showModal();
+}
+
 function renderMovies() {
   moviesContainer.innerHTML = movies.map(x => createMovieHtml(x)).join('');
   document.querySelectorAll('.movieDeleteBtn')
     .forEach(x => x.addEventListener('click', handleDeleteBtn));
+
+    document.querySelectorAll('.movieEditBtn')
+    .forEach(x => x.addEventListener('click', handleEditBtn));
 }
 
 addMovieForm.addEventListener('submit', handleAddMovieForm);
