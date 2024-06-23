@@ -57,7 +57,14 @@ function handleDeleteBtn(e) {
     return;
   }
 
+  /* ilk alternatif */
+  //let index = movies.findIndex(x => x.id === Number(this.dataset.movieid));
+  //movies.splice(index, 1);
+  /* ilk alternatif */
+
+  /* çakal yöntem */
   movies = movies.filter(x => x.id !== Number(this.dataset.movieid));
+  /* çakal yöntem */
   save();
   renderMovies();
 }
