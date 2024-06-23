@@ -18,11 +18,12 @@ function generateId() {
 }
 
 addMovieBtn.addEventListener('click', () => { 
+  modal.classList.remove('editModal');
   document.querySelector('input[name="id"]').value = "";
   modal.showModal();
 });
 
-function handleAddMovieForm() {
+function handleMovieForm() {
   let formData = new FormData(addMovieForm);
   let formObj = Object.fromEntries(formData);
   addMovieForm.reset();
@@ -41,6 +42,8 @@ function handleAddMovieForm() {
   save();
   renderMovies();
 }
+
+addMovieForm.addEventListener('submit', handleMovieForm);
 
 function save() {
   localStorage.movies = JSON.stringify(movies);
@@ -83,6 +86,9 @@ function handleDeleteBtn(e) {
 
 function handleEditBtn(e) {
   e.preventDefault();
+
+  modal.classList.add('editModal');
+
   let movieId = Number(this.dataset.movieid);
   let movie = movies.find(x => x.id === movieId);
   document.querySelector('input[name="id"]').value = movie.id;
@@ -102,4 +108,3 @@ function renderMovies() {
     .forEach(x => x.addEventListener('click', handleEditBtn));
 }
 
-addMovieForm.addEventListener('submit', handleAddMovieForm);
